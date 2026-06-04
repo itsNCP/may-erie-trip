@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LA → Erie, CO Road Trip</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ── PALETTE extracted from the painting ── */
+  :root {
+    /* backgrounds */
+    --cream:   #F5EDE3;   /* warm off-white / light salmon ground */
+    --petal:   #EED9D0;   /* soft dusty pink */
+    --mauve:   #C8A8B8;   /* lavender-mauve mid */
+    /* accents */
+    --terracotta: #C85830; /* the rich orange-red */
+    --salmon:  #E08068;   /* medium warm salmon */
+    --plum:    #5C3040;   /* dark eggplant / near-black */
+    --teal:    #2E8090;   /* the teal-blue accent */
+    --teal-lt: #6AADBA;   /* lighter blue-teal */
+    --olive:   #4A6030;   /* forest olive green */
+    --lime:    #A8C858;   /* bright lime-green accent */
+    --brown:   #6A3820;   /* warm chocolate */
+    --lilac:   #9878A8;   /* mid-purple */
+    /* text */
+    --ink:     #2E1C14;
+    --muted:   #7A6058;
+
+    /* category colors drawn from painting */
+    --c-charger: var(--teal);
+    --c-hotel:   var(--lilac);
+    --c-food:    var(--terracotta);
+    --c-coffee:  var(--brown);
+    --c-dog:     var(--olive);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  /* ── HEADER ── */
+  .hdr {
+    background: var(--plum);
+    padding: 44px 20px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hdr::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 10% 50%, rgba(200,88,48,.18) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 60% at 90% 30%, rgba(46,128,144,.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 50% at 50% 90%, rgba(168,200,88,.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hdr-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--salmon); margin-bottom: 10px; position: relative;
+  }
+  .hdr h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5.5vw, 52px);
+    font-weight: 900; color: var(--petal); line-height: 1.08; position: relative;
+  }
+  .hdr h1 span { color: var(--salmon); }
+  .hdr-sub {
+    font-size: 12px; color: rgba(238,217,208,.45);
+    margin-top: 9px; position: relative; letter-spacing: .05em;
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 8px 16px;
+    justify-content: center; padding: 13px 20px;
+    background: var(--plum);
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+  .leg { display: flex; align-items: center; gap: 6px;
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    text-transform: uppercase; letter-spacing: .13em;
+    color: rgba(238,217,208,.5); }
+  .ldot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── WRAP ── */
+  .wrap { max-width: 820px; margin: 0 auto; padding: 26px 16px 60px; }
+
+  /* ── OVERVIEW ── */
+  .ov {
+    background: var(--plum); border-radius: 12px;
+    padding: 22px 22px 18px; margin-bottom: 26px;
+  }
+  .ov-title {
+    font-family: 'Playfair Display', serif; font-size: 16px;
+    color: var(--petal); margin-bottom: 14px;
+  }
+  .ov-stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(100px,1fr));
+    gap: 10px; margin-bottom: 14px;
+  }
+  .ov-stat { background: rgba(255,255,255,.07); border-radius: 8px; padding: 10px 13px; }
+  .ov-val { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--petal); line-height: 1; }
+  .ov-lbl { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(238,217,208,.4); text-transform: uppercase; letter-spacing: .12em; margin-top: 2px; }
+  .ov-note {
+    font-size: 12.5px; color: rgba(238,217,208,.65); line-height: 1.55;
+    background: rgba(46,128,144,.14); border: 1px solid rgba(46,128,144,.25);
+    border-radius: 8px; padding: 11px 14px;
+  }
+  .ov-note strong { color: var(--teal-lt); }
+
+  /* ── SEGMENT CONNECTOR ── */
+  .seg {
+    display: flex; align-items: center; gap: 11px;
+    background: var(--petal); border-radius: 8px;
+    padding: 9px 15px; margin: 8px 0;
+    border-left: 3px solid var(--mauve);
+  }
+  .seg-icon { font-size: 17px; flex-shrink: 0; }
+  .seg-txt { font-family: 'DM Mono', monospace; font-size: 11.5px; color: var(--muted); }
+  .seg-txt strong { color: var(--ink); font-weight: 600; }
+
+  /* ── TOWN ACCORDION ── */
+  .town { margin-bottom: 5px; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(46,28,20,.09); }
+
+  .town-btn {
+    width: 100%; background: none; border: none;
+    cursor: pointer; padding: 0; display: block; text-align: left;
+  }
+
+  .town-head {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 17px; background: #FAF2EA;
+    transition: background .18s; flex-wrap: wrap;
+  }
+  .town-btn:hover .town-head { background: var(--petal); }
+  .town-btn.open .town-head { background: var(--petal); }
+
+  .town-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px; font-weight: 700; color: var(--ink);
+    flex: 1; min-width: 0; line-height: 1.2;
+  }
+  .town-state {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: var(--muted); text-transform: uppercase;
+    letter-spacing: .14em; white-space: nowrap;
+  }
+  .ticons { display: flex; gap: 4px; align-items: center; }
+  .ti { font-size: 14px; line-height: 1; }
+  .chev {
+    font-size: 11px; color: var(--muted);
+    transition: transform .25s; flex-shrink: 0; margin-left: 3px;
+  }
+  .town-btn.open .chev { transform: rotate(180deg); }
+
+  /* ── TOWN BODY ── */
+  .town-body { display: none; background: #FAF2EA; border-top: 1px solid var(--petal); padding: 15px 17px 18px; }
+  .town-body.open { display: block; }
+
+  /* ── CATEGORY LABEL ── */
+  .cat {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    text-transform: uppercase; letter-spacing: .2em;
+    color: var(--muted); margin: 15px 0 8px 2px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .cat:first-child { margin-top: 0; }
+
+  /* ── CHARGER STRIP ── */
+  .cs {
+    display: flex; flex-wrap: wrap; align-items: center;
+    justify-content: space-between; gap: 9px;
+    background: rgba(46,128,144,.08);
+    border: 1px solid rgba(46,128,144,.22);
+    border-radius: 8px; padding: 12px 15px; margin-bottom: 9px;
+  }
+  .cs-l { display: flex; align-items: center; gap: 10px; }
+  .cs-ico { font-size: 22px; }
+  .cs-title { font-weight: 600; font-size: 13.5px; color: var(--teal); line-height: 1.2; margin-bottom: 2px; }
+  .cs-detail { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+
+  /* ── ITEM CARD ── */
+  .item {
+    border-radius: 8px; padding: 13px 15px; margin-bottom: 7px;
+    border-left: 4px solid var(--petal);
+    background: var(--cream);
+    transition: box-shadow .18s, transform .18s;
+  }
+  .item:hover { box-shadow: 0 4px 16px rgba(46,28,20,.1); transform: translateY(-1px); }
+
+  .item.charger { border-left-color: var(--teal);        background: rgba(46,128,144,.04); }
+  .item.hotel   { border-left-color: var(--lilac);       background: rgba(152,120,168,.04); }
+  .item.food    { border-left-color: var(--terracotta);  background: rgba(200,88,48,.04); }
+  .item.coffee  { border-left-color: var(--brown);       background: rgba(106,56,32,.04); }
+  .item.dog     { border-left-color: var(--olive);       background: rgba(74,96,48,.04); }
+
+  .item-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 9px; flex-wrap: wrap; margin-bottom: 4px; }
+  .item-name { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.2; flex: 1; }
+
+  .badge {
+    font-family: 'DM Mono', monospace; font-size: 9.5px;
+    letter-spacing: .1em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 3px; white-space: nowrap; flex-shrink: 0;
+  }
+  .b-top  { background: rgba(92,48,64,.15);  color: var(--plum);       font-weight: 600; }
+  .b-std  { background: rgba(46,28,20,.08);  color: var(--muted); }
+  .b-pet  { background: rgba(46,128,144,.12); color: var(--teal); }
+
+  .item-desc { font-size: 13px; color: #3E2818; line-height: 1.6; margin-bottom: 9px; }
+  .item-desc em { font-style: normal; font-weight: 600; color: var(--plum); }
+
+  .item-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+
+  .map-btn {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--plum); color: var(--petal);
+    text-decoration: none; font-family: 'DM Mono', monospace;
+    font-size: 10.5px; letter-spacing: .06em;
+    padding: 5px 12px; border-radius: 5px;
+    transition: background .15s; white-space: nowrap;
+  }
+  .map-btn:hover { background: var(--terracotta); }
+
+  .rating { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 3px; }
+  .stars  { color: #B88010; letter-spacing: -1px; }
+  .pet-pill { font-size: 11px; background: rgba(152,120,168,.12); color: var(--lilac); padding: 2px 8px; border-radius: 4px; font-family: 'DM Mono', monospace; }
+
+  /* ── TIPS BOX ── */
+  .tips { background: var(--plum); border-radius: 10px; padding: 20px 22px; margin-top: 26px; }
+  .tips-title { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--petal); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,.1); }
+  .tip { font-size: 12.5px; color: rgba(238,217,208,.7); line-height: 1.6; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,.06); }
+  .tip:last-child { margin-bottom: 0; padding-bottom: 0; border: none; }
+  .tip strong { color: rgba(238,217,208,.92); }
+
+  footer {
+    text-align: center; font-size: 11px; color: var(--muted);
+    padding: 20px; border-top: 1px solid var(--petal);
+    font-family: 'DM Mono', monospace; letter-spacing: .06em;
+  }
+
+  @media(max-width: 580px){
+    .town-head { padding: 11px 13px; }
+    .town-body { padding: 12px 13px 16px; }
+    .item { padding: 11px 12px; }
+    .ov { padding: 17px 15px 14px; }
+    .wrap { padding: 18px 11px 44px; }
+    .hdr { padding: 34px 16px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-eyebrow">🟢 Trip In Progress · Tesla Model Y · Pet Friendly</div>
+  <h1>Cathedral City <span>→</span> Erie, CO</h1>
+  <div class="hdr-sub">Currently charging · Departing ~4:38 pm · Driving until ~9 pm tonight · Tesla GPS routing charges</div>
+</header>
+
+<div class="legend">
+  <div class="leg"><div class="ldot" style="background:var(--teal)"></div>Supercharger</div>
+  <div class="leg"><div class="ldot" style="background:var(--lilac)"></div>Hotel</div>
+  <div class="leg"><div class="ldot" style="background:var(--terracotta)"></div>Food</div>
+  <div class="leg"><div class="ldot" style="background:var(--brown)"></div>Coffee</div>
+  <div class="leg"><div class="ldot" style="background:var(--olive)"></div>Dog Walk</div>
+</div>
+
+<div class="wrap">
+
+<div class="ov">
+  <div class="ov-title">🟢 Live Status — Day 1 in Progress</div>
+  <div class="ov-stats">
+    <div class="ov-stat"><div class="ov-val">4:23 pm</div><div class="ov-lbl">Current time</div></div>
+    <div class="ov-stat"><div class="ov-val">~4:38</div><div class="ov-lbl">Departing</div></div>
+    <div class="ov-stat"><div class="ov-val">~9 pm</div><div class="ov-lbl">Stop tonight</div></div>
+    <div class="ov-stat"><div class="ov-val">239 mi</div><div class="ov-lbl">Range @ 90%</div></div>
+  </div>
+  <div class="ov-note" style="margin-bottom:10px"><strong>Tonight's realistic stops from Cathedral City (~4:38 pm departure):</strong><br>
+  Barstow → Primm → <strong>Las Vegas</strong> (recommended overnight) · or push to <strong>Mesquite</strong> if timing works out<br><br>
+  Tesla GPS will route all charging stops — trust it completely. Let it decide Yermo and any other stops.</div>
+  <div class="ov-note"><strong>Remaining route after tonight:</strong> Mesquite / Las Vegas → St. George → Beaver → Richfield → Green River → Grand Junction → Parachute → Rifle → Glenwood Springs → Silverthorne → Erie, CO. <strong>Critical leg:</strong> always top off fully before the Grand Junction → Glenwood canyon climb.</div>
+</div>
+
+<!-- ═══════════════════════════════════ START ═══════════════════════════════════ -->
+<div class="seg" style="background:rgba(46,128,144,.12); border-left-color:var(--teal)"><span class="seg-icon">🟢</span><div class="seg-txt"><strong>Cathedral City, CA — Currently here</strong> · Charging now · Departing ~4:38 pm · ~10 mi from Palm Desert Supercharger (may skip if already topped up)</div></div>
+<div class="seg"><span class="seg-icon">🚗</span><div class="seg-txt"><strong>Cathedral City → Barstow</strong> &nbsp;|&nbsp; ~115 mi &nbsp;·&nbsp; ~1.5 hrs &nbsp;·&nbsp; I-10 E → I-15 N · Your next charge stop is Yermo, CA (~6:50 pm per Tesla GPS)</div></div>
+
+<!-- LIVE CALLOUT -->
+<div style="background:rgba(74,96,48,.1); border:1px solid rgba(74,96,48,.28); border-radius:10px; padding:16px 18px; margin:8px 0 4px;">
+  <div style="font-family:'DM Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.18em; color:var(--olive); margin-bottom:10px;">🌅 Tonight · Sunset &amp; Dog Walk</div>
+  <div style="font-size:13.5px; color:var(--ink); line-height:1.65;">
+    <strong>Sunset tonight in the Mojave: approximately 8:00–8:05 pm PDT.</strong> You have plenty of light at 7:30 — it'll still be full daylight with the golden hour just starting to hit the desert beautifully.<br><br>
+    <strong>At 7:30 pm you'll be somewhere around Barstow or just past it heading toward Baker.</strong> Best dog walk options at that time:
+  </div>
+  <div style="margin-top:12px; display:flex; flex-direction:column; gap:9px;">
+    <div style="background:var(--cream); border-radius:7px; padding:12px 14px; border-left:3px solid var(--olive);">
+      <div style="font-family:'Playfair Display',serif; font-weight:700; font-size:14px; color:var(--ink); margin-bottom:3px;">Lillian Park — Barstow <span style="font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); font-weight:400;">· Best option</span></div>
+      <div style="font-size:12.5px; color:#3E2818; line-height:1.55;">Huge grass field, paved walking trail, picnic area with shade. Right in Barstow, easy off I-15. Wag! reviewers specifically call this one of the best dog spots in town. The grass and open field give a dog room to run on leash. Clean and well-maintained.</div>
+      <a href="https://maps.google.com/?q=Lillian+Park+Barstow+California" target="_blank" style="display:inline-flex;align-items:center;gap:4px;background:var(--plum);color:var(--petal);text-decoration:none;font-family:'DM Mono',monospace;font-size:10.5px;padding:5px 12px;border-radius:5px;margin-top:8px;">📍 Maps</a>
+    </div>
+    <div style="background:var(--cream); border-radius:7px; padding:12px 14px; border-left:3px solid var(--olive);">
+      <div style="font-family:'Playfair Display',serif; font-weight:700; font-size:14px; color:var(--ink); margin-bottom:3px;">Barstow Welcome Center · Outlets at Barstow <span style="font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); font-weight:400;">· Charger adjacent</span></div>
+      <div style="font-size:12.5px; color:#3E2818; line-height:1.55;">Officially dog-friendly — leashed dogs welcome inside the Welcome Center with a dog water bowl provided, plus a designated outdoor area to walk. Steps from the Barstow Supercharger. Open until 8 pm, so you'd just make it. A clean, easy combo if you're charging and walking at the same time.</div>
+      <a href="https://maps.google.com/?q=California+Welcome+Center+Barstow+Outlets" target="_blank" style="display:inline-flex;align-items:center;gap:4px;background:var(--plum);color:var(--petal);text-decoration:none;font-family:'DM Mono',monospace;font-size:10.5px;padding:5px 12px;border-radius:5px;margin-top:8px;">📍 Maps</a>
+    </div>
+    <div style="background:var(--cream); border-radius:7px; padding:12px 14px; border-left:3px solid var(--sage, #8aa078);">
+      <div style="font-family:'Playfair Display',serif; font-weight:700; font-size:14px; color:var(--ink); margin-bottom:3px;">Open Desert Pull-Off near Baker <span style="font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); font-weight:400;">· If you're past Barstow by 7:30</span></div>
+      <div style="font-size:12.5px; color:#3E2818; line-height:1.55;">If you've already cleared Barstow, pull off at any signed BLM access point between Barstow and Baker — the desert scrub is open, flat, and completely safe for a leashed walk. The golden-hour light in this stretch of Mojave is genuinely spectacular around 7:30–8 pm. No facilities, so bring your own water. The Mojave National Preserve boundary begins east of Baker if you want to go further.</div>
+      <a href="https://maps.google.com/?q=Mojave+National+Preserve+Baker+California" target="_blank" style="display:inline-flex;align-items:center;gap:4px;background:var(--plum);color:var(--petal);text-decoration:none;font-family:'DM Mono',monospace;font-size:10.5px;padding:5px 12px;border-radius:5px;margin-top:8px;">📍 Maps</a>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PALM DESERT ─── -->
+<div class="town" style="opacity:0.55">
+  <button class="town-btn" onclick="tog(this)">
+    <div class="town-head" style="background:#EDD8CC">
+      <div class="town-name" style="text-decoration:line-through">Palm Desert</div><div class="town-state">CA · ~10 min from Cathedral City</div>
+      <div class="ticons"><span class="ti">⚡</span><span class="ti">☕</span><span class="ti">🐾</span></div>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--terracotta);background:rgba(200,88,48,.12);padding:3px 8px;border-radius:3px;white-space:nowrap">LIKELY SKIP — already charging</span>
+      <span class="chev">▾</span>
+    </div>
+  </button>
+  <div class="town-body">
+    <div class="cs"><div class="cs-l"><div class="cs-ico">⚡</div><div><div class="cs-title">Tesla Supercharger — Palm Desert</div><div class="cs-detail">~73950 Country Club Dr · Charge during your 1-hr errand · Easy I-10 access</div></div></div><a class="map-btn" href="https://maps.google.com/?q=Tesla+Supercharger+Palm+Desert+CA" target="_blank">📍 Maps</a></div>
+    <div class="cat"><span>☕</span> Coffee</div>
+    <div class="item coffee"><div class="item-top"><div class="item-name">Koffi — Palm Desert</div><span class="badge b-top">LOCAL INSTITUTION</span></div><div class="item-desc">Desert institution beloved across the Coachella Valley since the early 2000s. Exceptional espresso, beautiful shaded patio, and the warmth of a shop that became the neighborhood. Perfect pre-drive coffee while the car charges.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Koffi+Palm+Desert+California" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 4.8</span></div></div>
+    <div class="cat"><span>🐾</span> Dog Walk</div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Palm Desert Civic Center Park &amp; Dog Run</div></div><div class="item-desc">Large landscaped park with shade trees, grass, and a dedicated fenced dog run — 5 min from the Supercharger. A great shake-out stretch before the desert drive. <em>Fill water bottles here. Heat rises fast east of Palm Desert.</em></div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Palm+Desert+Civic+Center+Park" target="_blank">📍 Maps</a></div></div>
+  </div>
+</div>
+
+<div class="seg"><span class="seg-icon">🚗</span><div class="seg-txt"><strong>Palm Desert → Barstow</strong> &nbsp;|&nbsp; ~110 mi &nbsp;·&nbsp; ~1.5 hrs &nbsp;·&nbsp; I-10 E → I-15 N · Mojave Desert opens up dramatically east of the pass</div></div>
+
+<!-- ─── BARSTOW ─── -->
+<div class="town">
+  <button class="town-btn" onclick="tog(this)">
+    <div class="town-head">
+      <div class="town-name">Barstow</div><div class="town-state">CA</div>
+      <div class="ticons"><span class="ti">⚡</span><span class="ti">🍽️</span><span class="ti">🏨</span><span class="ti">🐾</span></div>
+      <span class="chev">▾</span>
+    </div>
+  </button>
+  <div class="town-body">
+    <div class="cs"><div class="cs-l"><div class="cs-ico">⚡</div><div><div class="cs-title">Tesla Supercharger — Barstow (Lenwood Rd)</div><div class="cs-detail">2812 Lenwood Rd · I-15 exit 178 · 16+ stalls · Walking distance to restaurants including Oggi's Pizza</div></div></div><a class="map-btn" href="https://maps.google.com/?q=Tesla+Supercharger+2812+Lenwood+Rd+Barstow+CA" target="_blank">📍 Maps</a></div>
+    <div class="cat"><span>🍽️</span> Food</div>
+    <div class="item food"><div class="item-top"><div class="item-name">Idle Spurs Steakhouse</div><span class="badge b-top">BEST IN BARSTOW</span></div><div class="item-desc">The highest-rated proper restaurant in Barstow — a genuine steakhouse with excellent beef, crisp salads, and warm service. A real surprise in the Mojave. Reviewers describe it as a gem they stop at every time they make this drive.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Idle+Spurs+Steakhouse+Barstow+California" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.4</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Oggi's Pizza &amp; Brewing Co.</div><span class="badge b-std">WALKING FROM CHARGER</span></div><div class="item-desc">A short walk from the Lenwood Rd Supercharger — fresh pizza, craft beer, and a comfortable spot to wait out your charge. Reviewers on Yelp specifically mention this as the charger-adjacent lunch spot. Crispy crust, good selection.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Oggi%27s+Pizza+Brewing+Barstow+California" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.2</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Plata's Restaurant</div><span class="badge b-std">LOCAL MEXICAN</span></div><div class="item-desc">Family-owned Mexican spot that Barstow residents who've since moved away describe as the gold standard they compare everything to. Fresh, authentic, generous. One of those places that rewards the locals-only instinct.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Plata%27s+Restaurant+Barstow+California" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.3</span></div></div>
+    <div class="cat"><span>🐾</span> Dog Walk + Charger Combo</div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Barstow Station Grounds</div></div><div class="item-desc">The Supercharger is directly across from Barstow Station — officially pet-friendly. Walk the perimeter of the lot and the open desert-scrub adjacent to the station. Clean restrooms and a Circle K nearby. Not manicured but perfectly functional. <em>Bring water — this is peak Mojave territory.</em></div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Barstow+Station+1611+E+Main+St+Barstow+CA" target="_blank">📍 Maps</a></div></div>
+    <div class="cat"><span>🏨</span> Hotels</div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">TownePlace Suites Barstow</div><span class="badge b-top">TOP PICK</span></div><div class="item-desc">Marriott extended-stay with full kitchenettes, free breakfast, and the only pet-friendly hotel in Barstow with actual on-site grass for dogs. Maximum 2 pets, any size. Consistently praised for cleanliness, staff, and proximity to both I-15 and the Supercharger.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=TownePlace+Suites+Barstow+California" target="_blank">📍 Maps</a><span class="pet-pill">🐾 Any size · grass on site</span></div></div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">Home2 Suites by Hilton Barstow</div><span class="badge b-std">RELIABLE</span></div><div class="item-desc">Modern Hilton extended-stay with kitchen suites, indoor pool, and consistent quality. Maximum 2 pets of any size. Close to I-15 and the Supercharger. A solid choice when TownePlace is full.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Home2+Suites+Hilton+Barstow+California" target="_blank">📍 Maps</a><span class="pet-pill">🐾 Any size · $50 fee</span></div></div>
+  </div>
+</div>
+
+<div class="seg"><span class="seg-icon">🚗</span><div class="seg-txt"><strong>Barstow → Primm, NV</strong> &nbsp;|&nbsp; ~75 mi &nbsp;·&nbsp; ~1 hr &nbsp;·&nbsp; I-15 N · Baker is the midpoint (World's Tallest Thermometer, quirky desert stop) · Mojave opens to Nevada at Primm</div></div>
+
+<!-- ─── PRIMM ─── -->
+<div class="town">
+  <button class="town-btn" onclick="tog(this)">
+    <div class="town-head">
+      <div class="town-name">Primm</div><div class="town-state">NV — CA/NV border</div>
+      <div class="ticons"><span class="ti">⚡</span><span class="ti">🍽️</span><span class="ti">🐾</span></div>
+      <span class="chev">▾</span>
+    </div>
+  </button>
+  <div class="town-body">
+    <div class="cs"><div class="cs-l"><div class="cs-ico">⚡</div><div><div class="cs-title">Tesla Supercharger — Primm</div><div class="cs-detail">Adjacent to the Primm Valley Casino complex · I-15 at the California state line · Good mid-desert top-up</div></div></div><a class="map-btn" href="https://maps.google.com/?q=Tesla+Supercharger+Primm+Nevada" target="_blank">📍 Maps</a></div>
+    <div class="cat"><span>🍽️</span> Food — slim pickings, honest options</div>
+    <div class="item food"><div class="item-top"><div class="item-name">Primm Valley Resort Diner</div><span class="badge b-top">MOST RELIABLE</span></div><div class="item-desc">Primm is fundamentally a border-town fuel-up — the resort diner is the best sit-down option, serving hearty breakfast plates, burgers, and comfort food 24/7. Prices are reasonable, the booths are comfortable, and the servers are experienced road-tripper wranglers. <em>Don't overthink Primm — eat here, stretch the dog, and push north.</em></div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Primm+Valley+Resort+Casino+Nevada" target="_blank">📍 Maps</a></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Denny's at Primm</div><span class="badge b-std">24/7 RELIABLE</span></div><div class="item-desc">Open 24 hours, no surprises, and the Strawberry Stuffed French Toast Slam is genuinely good according to the local who wrote about it. One reviewer called it one of the better-run Denny's they'd visited. Fine for a quick, reliable stop before Vegas.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Denny%27s+Primm+Nevada" target="_blank">📍 Maps</a></div></div>
+    <div class="cat"><span>🐾</span> Dog Walk</div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Primm Valley Desert Stretch</div></div><div class="item-desc">The open desert scrubland around the resort parking lots is walkable and leash-friendly — not a park, but wide open space and surprisingly quiet once you get away from the main road. Walk toward the sand hills behind the casino complex. Brief but effective. Clean restrooms in the casino. <em>This stretch is legitimately beautiful desert at golden hour.</em></div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Primm+Nevada" target="_blank">📍 Maps</a></div></div>
+  </div>
+</div>
+
+<div class="seg"><span class="seg-icon">🚗</span><div class="seg-txt"><strong>Primm → Las Vegas</strong> &nbsp;|&nbsp; ~40 mi &nbsp;·&nbsp; ~40 min &nbsp;·&nbsp; I-15 N · Seven Magic Mountains art installation visible east of I-15</div></div>
+
+<!-- ─── LAS VEGAS ─── -->
+<div class="town">
+  <button class="town-btn" onclick="tog(this)">
+    <div class="town-head" style="background:rgba(46,128,144,.1)">
+      <div class="town-name">Las Vegas</div><div class="town-state">NV</div>
+      <div class="ticons"><span class="ti">⚡</span><span class="ti">🍽️</span><span class="ti">🏨</span><span class="ti">🐾</span></div>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);background:rgba(46,128,144,.12);padding:3px 8px;border-radius:3px;white-space:nowrap">⭐ TONIGHT'S BEST STOP</span>
+      <span class="chev">▾</span>
+    </div>
+  </button>
+  <div class="town-body">
+    <div class="cs"><div class="cs-l"><div class="cs-ico">⚡</div><div><div class="cs-title">Tesla Supercharger — Las Vegas South Strip</div><div class="cs-detail">I-15 Exit 41 · Multiple stall locations near Strip · Charge to 90% before St. George (~120 mi)</div></div></div><a class="map-btn" href="https://maps.google.com/?q=Tesla+Supercharger+Las+Vegas+I-15+exit+41" target="_blank">📍 Maps</a></div>
+    <div class="cat"><span>🍽️</span> Food</div>
+    <div class="item food"><div class="item-top"><div class="item-name">Esther's Kitchen</div><span class="badge b-top">🏆 BEST IN VEGAS</span></div><div class="item-desc">Chef James Trees' celebrated seasonal Italian in the Arts District — wood-fired sourdough pizzas, handmade pasta, James Beard–nominated cooking. Featured on Netflix's <em>Somebody Feed Phil</em>. The genuine local answer to "where do you actually eat in Vegas?" Weekday lunch 11am–3pm, weekend brunch 10am. <em>Book ahead or arrive right at opening.</em></div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Esther%27s+Kitchen+1131+S+Main+St+Las+Vegas" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 4.7 · 3,400+ reviews</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Eggslut — The Cosmopolitan</div><span class="badge b-std">QUICK + EXCELLENT</span></div><div class="item-desc">Famous egg sandwich counter inside the Cosmopolitan — the Fairfax and the "Slut" bowl are icons. Lines move fast. Perfect when you want something exceptional without a full sit-down meal.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Eggslut+Cosmopolitan+Las+Vegas" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.4</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Yardbird — The Venetian</div><span class="badge b-std">SOUTHERN COMFORT</span></div><div class="item-desc">Celebrity-chef Southern American done properly — excellent fried chicken, waffles, and comfort plates. Genuinely high quality. Filling and fun, perfect before a long afternoon drive north.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Yardbird+The+Venetian+Las+Vegas" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.3</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Winnie &amp; Ethel's Downtown Diner</div><span class="badge b-std">OFF-STRIP LOCAL</span></div><div class="item-desc">Local diner near Fremont Street — pot roast French dip, meatloaf sandwiches, real comfort food at real prices. Zero tourist-trap energy. Great value and consistently warm service. If Esther's is your dinner plan, this makes a great casual lunch.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Winnie+and+Ethel%27s+Downtown+Diner+Las+Vegas" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.4</span></div></div>
+    <div class="cat"><span>🐾</span> Dog Walk</div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Desert Breeze Park — Off-Leash Dog Run</div><span class="badge b-top">BEST DOG PARK IN VEGAS</span></div><div class="item-desc">Fully fenced off-leash area, separate large and small dog sections, grass and shade. About 10 minutes from the South Strip Supercharger. A solid chance to burn energy before the canyon drive to St. George. <em>Bring water — desert heat in summer is real even in the city.</em></div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Desert+Breeze+Park+Dog+Run+Las+Vegas" target="_blank">📍 Maps</a></div></div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Sunset Park — Dog Friendly Area</div></div><div class="item-desc">Large southeast-of-Strip park with a dedicated off-leash area, lake views, and well-maintained grass. More spacious and calmer than Desert Breeze. Great if you have 30+ minutes and want a proper walk rather than just a run.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Sunset+Park+Las+Vegas+Dog+Park" target="_blank">📍 Maps</a></div></div>
+    <div class="cat"><span>🏨</span> Hotels</div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">TownePlace Suites Las Vegas North I-15</div><span class="badge b-top">🏆 BEST RATED</span></div><div class="item-desc">Brand-new Marriott extended-stay rated 9.8/10 from 424+ reviews. Full kitchenettes, free hot breakfast buffet, outdoor pool and hot tub. Practically on your I-15 route north — closest quality pet-friendly hotel to the Supercharger in Las Vegas.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=TownePlace+Suites+Las+Vegas+North+I-15+4360+Nexus+Way" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 9.8/10</span><span class="pet-pill">🐾 40 lb · $150 fee</span></div></div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">Platinum Hotel &amp; Spa</div><span class="badge b-std">NON-GAMING BOUTIQUE</span></div><div class="item-desc">One block from the Strip — non-gaming, non-smoking, genuinely peaceful. Indoor/outdoor heated pools, spacious suites, excellent reviews for calm atmosphere. The antidote to casino hotel chaos. Pet-friendly, confirm fee.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Platinum+Hotel+and+Spa+Las+Vegas" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 8.7/10</span><span class="pet-pill">🐾 Confirm fee</span></div></div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">Residence Inn Las Vegas Airport</div><span class="badge b-std">PRACTICAL CHOICE</span></div><div class="item-desc">Popular extended-stay Marriott near the airport — pool, BBQ grill, full kitchens, free parking, one of the most reviewed pet-friendly hotels in the city. Easy highway access for the morning push north.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Residence+Inn+Las+Vegas+Airport" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 8.5/10</span><span class="pet-pill">🐾 Pet-friendly</span></div></div>
+  </div>
+</div>
+
+<div class="seg"><span class="seg-icon">🚗</span><div class="seg-txt"><strong>Las Vegas → Mesquite, NV</strong> &nbsp;|&nbsp; ~80 mi &nbsp;·&nbsp; ~1.25 hrs &nbsp;·&nbsp; I-15 N · Virgin River Gorge begins just past Mesquite</div></div>
+
+<!-- ─── MESQUITE ─── -->
+<div class="town">
+  <button class="town-btn" onclick="tog(this)">
+    <div class="town-head">
+      <div class="town-name">Mesquite</div><div class="town-state">NV</div>
+      <div class="ticons"><span class="ti">🍽️</span><span class="ti">🏨</span><span class="ti">🐾</span></div>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);background:rgba(122,96,88,.1);padding:3px 8px;border-radius:3px;white-space:nowrap">IF PUSHING PAST VEGAS</span>
+      <span class="chev">▾</span>
+    </div>
+  </button>
+  <div class="town-body">
+    <div class="cat"><span>🍽️</span> Food</div>
+    <div class="item food"><div class="item-top"><div class="item-name">Eureka Casino Hotel Restaurant</div><span class="badge b-top">BEST IN MESQUITE</span></div><div class="item-desc">Reviewers specifically rave about this spot — omelettes, chicken fried steak, turkey sausage, outdoor seating that welcomes dogs. One traveler wrote: <em>"from the minute you hit the door to check out — they take dogs, no problem!"</em> Warm, local-resort atmosphere far removed from the Strip.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Eureka+Casino+Hotel+Mesquite+Nevada" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.2</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Casablanca Casino Cafe</div><span class="badge b-std">CONVENIENT</span></div><div class="item-desc">Multiple food options under one roof on I-15 — cafe and grill, easy parking, quick in-out. Nothing exceptional but reliable and fast when you just need to eat and continue. Has outdoor seating adjacent to the resort grounds.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Casablanca+Casino+Mesquite+Nevada" target="_blank">📍 Maps</a></div></div>
+    <div class="cat"><span>🐾</span> Dog Walk</div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Pioneer Park + Veterans Memorial Park</div><span class="badge b-top">BEST MID-DRIVE WALK</span></div><div class="item-desc"><em>Actual grass, shade trees, picnic tables, and drinking fountains</em> — one of the best quick stretch stops on the entire route. Two adjacent parks right in downtown Mesquite, 3 min from I-15. Baseball fields, open paths, and a calm small-town atmosphere. <em>Fill water bottles here before entering the Virgin River Gorge.</em></div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Pioneer+Park+Mesquite+Nevada" target="_blank">📍 Maps</a></div></div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Virgin River Canyon Recreation Area</div><span class="badge b-std">SCENIC · 10 MIN SOUTH</span></div><div class="item-desc">Just south near Littlefield, AZ (I-15 exit 8) — dog-friendly trails along the Virgin River with shade shelters and dramatic canyon views. Leashed dogs welcome. BringFido rates this as one of the top dog-friendly stops between Vegas and Utah. Best if you have 30+ extra minutes.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Virgin+River+Canyon+Recreation+Area+Littlefield+AZ" target="_blank">📍 Maps</a></div></div>
+    <div class="cat"><span>🏨</span> Hotels</div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">Eureka Casino Hotel Mesquite</div><span class="badge b-top">🏆 TOP PICK</span></div><div class="item-desc">Reviews are emphatic on pet accommodations: <em>"actual green grass, clean green grass and poop bag availability — best pet-friendly hotel we've visited yet."</em> Ground-floor pet rooms, fenced pet relief area, indoor/outdoor pools, and friendly staff. An excellent mid-route overnight.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Eureka+Casino+Hotel+Mesquite+Nevada" target="_blank">📍 Maps</a><span class="pet-pill">🐾 Grass · poop bags on site</span></div></div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">Holiday Inn Resort Mesquite</div><span class="badge b-std">RESORT OPTION</span></div><div class="item-desc">Full resort hotel on I-15 with indoor/outdoor sports facilities, pools, and a restaurant. One of the larger pet-friendly options in Mesquite. Good if you want space for the dog to roam on a bigger property.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Holiday+Inn+Resort+Mesquite+Nevada" target="_blank">📍 Maps</a><span class="pet-pill">🐾 Pet-friendly · confirm fee</span></div></div>
+  </div>
+</div>
+
+<div class="seg"><span class="seg-icon">🚗</span><div class="seg-txt"><strong>Mesquite → St. George, UT</strong> &nbsp;|&nbsp; ~40 mi &nbsp;·&nbsp; ~45 min &nbsp;·&nbsp; I-15 N · Through the spectacular Virgin River Gorge — 1,000-ft canyon walls. Stop at the signed Rest Area inside the gorge for photos.</div></div>
+
+<!-- ─── ST. GEORGE ─── -->
+<div class="town">
+  <button class="town-btn" onclick="tog(this)">
+    <div class="town-head">
+      <div class="town-name">St. George</div><div class="town-state">UT</div>
+      <div class="ticons"><span class="ti">⚡</span><span class="ti">☕</span><span class="ti">🍽️</span><span class="ti">🏨</span><span class="ti">🐾</span></div>
+      <span class="chev">▾</span>
+    </div>
+  </button>
+  <div class="town-body">
+    <div class="cs"><div class="cs-l"><div class="cs-ico">⚡</div><div><div class="cs-title">Tesla Supercharger — St. George</div><div class="cs-detail">1091 N Bluff St, Sunset Commercial Center · 8 stalls · 24/7 · Near Starbucks, walkable to shops</div></div></div><a class="map-btn" href="https://maps.google.com/?q=Tesla+Supercharger+1091+N+Bluff+St+St+George+UT" target="_blank">📍 Maps</a></div>
+    <div class="cat"><span>☕</span> Coffee</div>
+    <div class="item coffee"><div class="item-top"><div class="item-name">Perks Coffee Espresso &amp; Smoothies</div><span class="badge b-top">🏆 VOTED BEST S. UTAH</span></div><div class="item-desc">Voted best coffee in Southern Utah — in-house roasted beans since 2003. The regional institution. Smooth espresso drinks, smoothies, and the warmth of a shop that's been doing this for two decades.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Perks+Coffee+Espresso+St+George+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 4.7</span></div></div>
+    <div class="item coffee"><div class="item-top"><div class="item-name">Cafe FeelLove</div><span class="badge b-std">PATIO + VIBE</span></div><div class="item-desc">Ranked #1 coffee shop in St. George by local press — iced chais, vegan bowls, outdoor patio that welcomes dogs at the tables. Near Utah Tech campus. Works as a light meal or an evening hang too.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Cafe+FeelLove+St+George+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 4.8</span></div></div>
+    <div class="item coffee"><div class="item-top"><div class="item-name">Bonrue Bakery</div><span class="badge b-std">PASTRIES + COFFEE</span></div><div class="item-desc">Rebranded from Farmstead in 2025 but same beloved owners — top-rated pastries, baked goods, and excellent coffee. Perfect for grabbing road snacks and a latte on departure day.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Bonrue+Bakery+St+George+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 4.8</span></div></div>
+    <div class="cat"><span>🍽️</span> Food</div>
+    <div class="item food"><div class="item-top"><div class="item-name">Wood Ash Rye (Advenire Hotel)</div><span class="badge b-top">🏆 BEST IN ST. GEORGE</span></div><div class="item-desc">The finest dining in town — seasonal menu, exceptional cocktails, strong wine program. Regularly on regional "best of" lists. Set inside the beautiful Advenire Hotel downtown. Where locals send out-of-town guests for a special meal.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Wood+Ash+Rye+Advenire+Hotel+St+George+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 4.7</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Angelica's Mexican Grill</div><span class="badge b-std">AUTHENTIC LOCAL</span></div><div class="item-desc">Family-owned, art-adorned, and consistently beloved by residents — authentic street tacos, burritos, and chile verde made fresh. Fast service, great value, one of those places you'd find in any "ask a local" food guide.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Angelica%27s+Mexican+Grill+St+George+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.5</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Ernie's The French Bakery</div><span class="badge b-std">PASTRY + LUNCH</span></div><div class="item-desc">Acclaimed as one of the finest bakeries in the country — European-quality pastries that reviewers say rival Paris and San Francisco. Perfect for a light lunch with world-class baked goods. A real destination.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Ernie%27s+The+French+Bakery+St+George+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 4.8</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Morty's Cafe</div><span class="badge b-std">CASUAL BREAKFAST / LUNCH</span></div><div class="item-desc">Top pick for casual breakfast or brunch in St. George — friendly staff, consistent quality, genuinely local feel. Great if you want a low-key meal without a wait or reservation. Sandwiches, burritos, eggs done right.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Morty%27s+Cafe+St+George+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.5</span></div></div>
+    <div class="cat"><span>🐾</span> Dog Walk</div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Snow Canyon State Park</div><span class="badge b-top">BEST WALK OF THE TRIP SO FAR</span></div><div class="item-desc">15 min west — stunning red and white sandstone canyon with leashed dogs welcome on many trails. The Red Sand Dune trail and lava tube hike are both dog-friendly and easy. Spectacular scenery with very manageable terrain. <em>Go early in summer — heat builds fast in the canyon. This is genuinely one of the most beautiful dog walks on the entire route.</em></div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Snow+Canyon+State+Park+Utah" target="_blank">📍 Maps</a></div></div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Middleton Park Dog Park</div><span class="badge b-std">IN-TOWN OFF-LEASH</span></div><div class="item-desc">Fenced off-leash park right in St. George — grass, separate big and small dog sections, water stations. If your dog just needs a quick run-around, this is the spot. Easy to find, in town.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Middleton+Park+Dog+Park+St+George+Utah" target="_blank">📍 Maps</a></div></div>
+    <div class="cat"><span>🏨</span> Hotels</div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">La Quinta Inn &amp; Suites St. George</div><span class="badge b-top">🏆 TOP PICK</span></div><div class="item-desc">Rated 9.4/10 Exceptional with nearly 2,000 reviews. Outdoor pool, gym, free WiFi. Easy I-15 access, close to Supercharger. La Quinta has <em>no breed restrictions and no weight limit</em> — the best chain for dogs of all sizes.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=La+Quinta+Inn+Suites+St+George+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 9.4/10</span><span class="pet-pill">🐾 No weight limit · No fee</span></div></div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">Best Western Coral Hills</div><span class="badge b-std">GREAT VALUE</span></div><div class="item-desc">9.2/10 with 1,000+ reviews. Both indoor and outdoor pools — a real desert luxury. Free hot breakfast, consistently praised for cleanliness. Downtown St. George, walkable to dinner options.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Best+Western+Coral+Hills+125+E+Saint+George+Blvd" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 9.2/10</span><span class="pet-pill">🐾 Pet-friendly</span></div></div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">Hyatt Place St. George</div><span class="badge b-std">UPSCALE</span></div><div class="item-desc">Modern full-service Hyatt downtown. Excellent reviews for cleanliness and service. Walking distance to Wood Ash Rye and Cafe FeelLove. Pool area with red rock views.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Hyatt+Place+St+George+Convention+Center" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 8.8/10</span><span class="pet-pill">🐾 Pet-friendly · confirm fee</span></div></div>
+  </div>
+</div>
+
+<div class="seg"><span class="seg-icon">🚗</span><div class="seg-txt"><strong>St. George → Beaver, UT</strong> &nbsp;|&nbsp; ~100 mi &nbsp;·&nbsp; ~1.5 hrs &nbsp;·&nbsp; I-15 N · Open high desert rising into the central Utah plateau</div></div>
+
+<!-- ─── BEAVER ─── -->
+<div class="town">
+  <button class="town-btn" onclick="tog(this)">
+    <div class="town-head">
+      <div class="town-name">Beaver</div><div class="town-state">UT</div>
+      <div class="ticons"><span class="ti">⚡</span><span class="ti">🍽️</span><span class="ti">🏨</span><span class="ti">🐾</span></div>
+      <span class="chev">▾</span>
+    </div>
+  </button>
+  <div class="town-body">
+    <div class="cs"><div class="cs-l"><div class="cs-ico">⚡</div><div><div class="cs-title">Tesla Supercharger — Beaver, UT</div><div class="cs-detail">I-15 corridor · Good buffer between St. George and Richfield · ~100 mi from each</div></div></div><a class="map-btn" href="https://maps.google.com/?q=Tesla+Supercharger+Beaver+Utah" target="_blank">📍 Maps</a></div>
+    <div class="cat"><span>🍽️</span> Food</div>
+    <div class="item food"><div class="item-top"><div class="item-name">The Creamery</div><span class="badge b-top">DON'T MISS THIS ONE</span></div><div class="item-desc">A genuinely unique stop — a specialty dairy plant established in 1952 that also functions as a restaurant. Local cheese, real milkshakes, and meals made with product from the adjacent facility. <em>The best thing to eat in Beaver by a wide margin</em> and a real slice of rural Utah. The ice cream alone is worth the stop.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=The+Creamery+Beaver+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.4 · One-of-a-kind</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Craigo's Pizza</div><span class="badge b-std">ROAD TRIPPER GEM</span></div><div class="item-desc">Consistently praised by road-trippers as a must-stop — fresh pizza, excellent service, Legos and puzzles for kids on the shelves. The staff even mailed back a stuffed animal a child left behind. That kind of place. <em>"A must stop if you're passing through."</em></div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Craigo%27s+Pizza+Beaver+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 4.6</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Timberline Inn Restaurant</div><span class="badge b-std">FAMILY DINER · OFF I-15</span></div><div class="item-desc">Well-loved family-style restaurant right off exit 109 — good taco salad, solid burgers, reliable comfort food. Tripadvisor reviewers who've been stopping for years describe it as their consistent I-15 favorite. Hotel attached if needed.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Timberline+Inn+Restaurant+Beaver+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.2</span></div></div>
+    <div class="cat"><span>🐾</span> Dog Walk</div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Beaver City Park</div></div><div class="item-desc">Quiet, grassy municipal park right in Beaver — mature trees, benches, good clean restrooms. 2 min from I-15. Exactly the right scale for a mid-drive stretch without committing to a hike. <em>Elevation is ~5,800 ft — noticeably cooler than St. George, a welcome change.</em></div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Beaver+City+Park+Utah" target="_blank">📍 Maps</a></div></div>
+    <div class="cat"><span>🏨</span> Hotels</div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">Best Western Paradise Inn — Beaver</div><span class="badge b-top">TOP PICK</span></div><div class="item-desc">Highly rated and consistently praised for cleanliness, staff, and comfortable beds. Outdoor pool, free breakfast, small-town quiet. One of the best-reviewed hotels in Beaver. Easy I-15 access.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Best+Western+Paradise+Inn+Beaver+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 8.8/10</span><span class="pet-pill">🐾 Pet-friendly · confirm fee</span></div></div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">Comfort Inn &amp; Suites Beaver I-15</div><span class="badge b-std">RELIABLE</span></div><div class="item-desc">Clean, modern Comfort Inn right off I-15. Free hot breakfast, indoor pool, consistent quality. One of the most-booked hotels in Beaver — solid and straightforward.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Comfort+Inn+Suites+Beaver+Utah+I-15" target="_blank">📍 Maps</a><span class="pet-pill">🐾 Pet-friendly</span></div></div>
+  </div>
+</div>
+
+<div class="seg"><span class="seg-icon">🚗</span><div class="seg-txt"><strong>Beaver → Richfield, UT</strong> &nbsp;|&nbsp; ~35 mi &nbsp;·&nbsp; ~35 min &nbsp;·&nbsp; I-15 N then briefly I-70 · Shortest segment — great if you need to eat, sleep, or charge in a smaller town</div></div>
+
+<!-- ─── RICHFIELD ─── -->
+<div class="town">
+  <button class="town-btn" onclick="tog(this)">
+    <div class="town-head">
+      <div class="town-name">Richfield</div><div class="town-state">UT</div>
+      <div class="ticons"><span class="ti">⚡</span><span class="ti">🍽️</span><span class="ti">🏨</span><span class="ti">🐾</span></div>
+      <span class="chev">▾</span>
+    </div>
+  </button>
+  <div class="town-body">
+    <div class="cs"><div class="cs-l"><div class="cs-ico">⚡</div><div><div class="cs-title">Tesla Supercharger — Richfield, UT</div><div class="cs-detail">Near downtown Richfield · I-70 / I-15 junction · Confirmed active 24/7 · Great overnight charging town</div></div></div><a class="map-btn" href="https://maps.google.com/?q=Tesla+Supercharger+Richfield+Utah" target="_blank">📍 Maps</a></div>
+    <div class="cat"><span>🍽️</span> Food</div>
+    <div class="item food"><div class="item-top"><div class="item-name">Severo</div><span class="badge b-top">🏆 BEST IN RICHFIELD</span></div><div class="item-desc">By a wide margin the most praised restaurant in Richfield — reviewers describe it as one of the best meals they've had on any road trip, ever. <em>"Chimichurri steak mac and cheese, cast iron cornbread, shepherd's pie, Utah filet, Annabella chicken"</em> — a rotating farm-to-table menu in a Western-themed space with intimate lighting and exceptional service. A genuine destination restaurant in a surprising location.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Severo+Restaurant+Richfield+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 4.8 · Best surprise of the route</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Borens Smokehouse</div><span class="badge b-std">BEST BBQ</span></div><div class="item-desc">Central Utah BBQ institution — <em>"wow, not what I was expecting when I randomly had to stay in Richfield UT... I might've had the best BBQ."</em> The Boren burger and mac and cheese squares are standouts. One of those places you'd walk past a thousand times and then be astounded.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Borens+Smokehouse+Richfield+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 4.6</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Little Wonder Cafe</div><span class="badge b-std">100+ YEAR INSTITUTION</span></div><div class="item-desc">Standing on Main Street for over 100 years — a genuine piece of Utah road history. Local food guide calls it one of their favorites. The kind of small-town cafe that defines the I-70 character of central Utah. Great for a quick, honest meal.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Little+Wonder+Cafe+Richfield+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.3</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Steve's Steakhouse</div><span class="badge b-std">EVENING OPTION · OPENS 4PM</span></div><div class="item-desc">Perfectly cooked steaks and crisp salads — reviewers who arrived after a long day on the road call it the high point of the trip. The server Veronica has her own fan club in the review section. Opens at 4pm, ideal for an early dinner if you're overnighting in Richfield.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Steve%27s+Steakhouse+Richfield+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.4 · Dinner only from 4pm</span></div></div>
+    <div class="cat"><span>🐾</span> Dog Walk</div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Richfield City Park</div></div><div class="item-desc">Grassy, shaded city park right downtown near the Supercharger — a clean, pleasant stretch for the dog between sessions. BringFido specifically lists the Richfield Visitor Center as a dog-friendly stop here. Combine the walk with your charger stop. <em>Elevation ~5,300 ft — cool and breezy, a great contrast to the lower desert.</em></div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Richfield+City+Park+Utah" target="_blank">📍 Maps</a></div></div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Fishlake National Forest Trailheads</div><span class="badge b-std">20–30 MIN WEST · SPECTACULAR</span></div><div class="item-desc">If you have extra time — Fishlake National Forest is a 20-min drive west of Richfield and offers dog-friendly trails through aspen groves and high mountain terrain around Fish Lake itself. Leashed dogs welcome on most trails. One of Utah's most underrated landscapes and a complete change from the desert.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Fish+Lake+Utah+National+Forest" target="_blank">📍 Maps</a></div></div>
+    <div class="cat"><span>🏨</span> Hotels</div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">Hampton Inn Richfield</div><span class="badge b-top">🏆 TOP PICK</span></div><div class="item-desc">The best-reviewed full-service hotel in Richfield — free hot breakfast, clean rooms, great water pressure, friendly staff. BringFido confirms up to 75 lb limit ($20/night pet fee). Easy I-70/I-15 access. Consistently excellent reviews from road-trippers who planned to just pass through and ended up happy they stayed.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Hampton+Inn+Richfield+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 8.9/10</span><span class="pet-pill">🐾 Up to 75 lb · $20/night</span></div></div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">Fairfield Inn &amp; Suites Richfield</div><span class="badge b-std">RELIABLE MARRIOTT</span></div><div class="item-desc">Modern Marriott property — any size dogs welcome (2 pets max), $50 flat stay fee. Breakfast included, clean and consistent. <em>"BW Richfield — plenty of room to walk the dog"</em> note on the adjacent Best Western applies to this block too. Good infrastructure for a pet-traveling family.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Fairfield+Inn+Suites+Richfield+Utah" target="_blank">📍 Maps</a><span class="pet-pill">🐾 Any size · $50 flat fee</span></div></div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">Comfort Inn Richfield I-70</div><span class="badge b-std">VALUE OPTION</span></div><div class="item-desc">Well-reviewed I-70 roadside Comfort Inn — dog-friendly rooms with grassy relief areas and poop bags on site. Treats at the front desk. Consistent guest satisfaction ratings, fast access to Severo for dinner. A solid budget-friendly choice.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Comfort+Inn+Richfield+I-70+Utah" target="_blank">📍 Maps</a><span class="pet-pill">🐾 Up to 35 lb · $20/night · Treats at desk</span></div></div>
+  </div>
+</div>
+
+<div class="seg"><span class="seg-icon">🚗</span><div class="seg-txt"><strong>Richfield → Green River, UT</strong> &nbsp;|&nbsp; ~120 mi &nbsp;·&nbsp; ~2 hrs &nbsp;·&nbsp; I-70 E · The San Rafael Swell — high red rock desert plateaus and one of the most dramatic canyon stretches in Utah</div></div>
+
+<!-- ─── GREEN RIVER ─── -->
+<div class="town">
+  <button class="town-btn" onclick="tog(this)">
+    <div class="town-head">
+      <div class="town-name">Green River</div><div class="town-state">UT</div>
+      <div class="ticons"><span class="ti">⚡</span><span class="ti">☕</span><span class="ti">🍽️</span><span class="ti">🏨</span><span class="ti">🐾</span></div>
+      <span class="chev">▾</span>
+    </div>
+  </button>
+  <div class="town-body">
+    <div class="cs"><div class="cs-l"><div class="cs-ico">⚡</div><div><div class="cs-title">Tesla Supercharger — Green River, UT</div><div class="cs-detail">Off I-70 · Steps from Green River Coffee Co. and Tamarisk Restaurant · 24/7</div></div></div><a class="map-btn" href="https://maps.google.com/?q=Tesla+Supercharger+Green+River+Utah" target="_blank">📍 Maps</a></div>
+    <div class="cat"><span>☕🍽️</span> Coffee + Lunch — best charger combo stop of the entire route</div>
+    <div class="item coffee"><div class="item-top"><div class="item-name">Green River Coffee Co.</div><span class="badge b-top">🏆 EV ROAD TRIPPER #1</span></div><div class="item-desc">EV road-trippers call this their single favorite charging stop on the entire US Tesla network. In-house fair-trade roasted coffee, legendary breakfast burritos (~$10, enormous), and an authentically eclectic space — giant red velvet couch reportedly from a brothel in Helper, UT, art everywhere, a reading room. Owner Amy has been running this since 2004. <em>This is a highlight of the trip regardless of whether you need coffee.</em></div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Green+River+Coffee+Co+Green+River+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 4.9 · EV travelers' #1</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Ray's Tavern</div><span class="badge b-std">I-70 LEGEND</span></div><div class="item-desc">Crowned "best pit stop on I-70" by Salt Lake Magazine. Classic bar burgers, cold beer, no-nonsense atmosphere. A genuine roadside institution since the 1960s. Cash-preferred, character-rich. Go if you want a cold beer and a real burger in a place that's been unchanged for decades.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Ray%27s+Tavern+Green+River+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.3 · Cash preferred</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Tamarisk Restaurant</div><span class="badge b-std">ACROSS FROM CHARGER</span></div><div class="item-desc">Classic American diner directly across the street from the Supercharger — burgers, sandwiches, river views through the windows. The most convenient sit-down option if Green River Coffee is packed. Reliable and well-positioned.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Tamarisk+Restaurant+Green+River+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.0 · Steps from charger</span></div></div>
+    <div class="cat"><span>🐾</span> Dog Walk</div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Green River State Park — Riverbank Trail</div><span class="badge b-top">COMBINE WITH CHARGE STOP</span></div><div class="item-desc">Short drive from the Supercharger — leashed dogs welcome on scenic trails along the Green River under giant cottonwood trees. The canyon walls above are spectacular, the river is calm and beautiful, and <em>dogs can wade in calmer bank areas</em>. Plan 30–45 minutes here alongside your coffee and lunch stop. One of the finest mid-drive dog walks on the route.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Green+River+State+Park+Utah" target="_blank">📍 Maps</a></div></div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Crystal Geyser Road — River Road Walk</div><span class="badge b-std">UNIQUE GEOLOGICAL CURIOSITY</span></div><div class="item-desc">Drive south on River Road to the Crystal Geyser — a natural CO2 cold-water geyser that erupts on a rough schedule. Dogs welcome in the open desert landscape. The road itself winds alongside the Green River through beautiful canyon scenery. Best if you have an extra 30+ minutes.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Crystal+Geyser+Green+River+Utah" target="_blank">📍 Maps</a></div></div>
+    <div class="cat"><span>🏨</span> Hotels</div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">First Choice Inn at the Swell</div><span class="badge b-top">🏆 TOP PICK</span></div><div class="item-desc">Reviewers gush: <em>"clean big rooms, pet-friendly, indoor pool and jacuzzi"</em> — <em>"lovely green space and dog-friendly grounds"</em> — <em>"good price, perfect halfway location, amazing hospitality."</em> Indoor pool, full hot breakfast, and genuinely excellent dog accommodations. The best hotel in Green River for pet-traveling road-trippers.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=First+Choice+Inn+at+the+Swell+Green+River+Utah" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 8.2/10</span><span class="pet-pill">🐾 Dog grounds on site</span></div></div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">Holiday Inn Express Green River</div><span class="badge b-std">CONSISTENT</span></div><div class="item-desc">Standard Holiday Inn Express — comfortable beds, free breakfast, easy I-70 access. Reliable and uncomplicated. Lets you get on the road early. Pets allowed with fee.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Holiday+Inn+Express+Green+River+Utah" target="_blank">📍 Maps</a><span class="pet-pill">🐾 Pets with fee</span></div></div>
+  </div>
+</div>
+
+<div class="seg"><span class="seg-icon">🚗</span><div class="seg-txt"><strong>Green River → Grand Junction, CO</strong> &nbsp;|&nbsp; ~90 mi &nbsp;·&nbsp; ~1.5 hrs &nbsp;·&nbsp; I-70 E across the Utah/Colorado state line · Book Cliffs to the north · Colorado River begins appearing</div></div>
+
+<!-- ─── GRAND JUNCTION ─── -->
+<div class="town">
+  <button class="town-btn" onclick="tog(this)">
+    <div class="town-head">
+      <div class="town-name">Grand Junction</div><div class="town-state">CO</div>
+      <div class="ticons"><span class="ti">⚡</span><span class="ti">🍽️</span><span class="ti">🏨</span><span class="ti">🐾</span></div>
+      <span class="chev">▾</span>
+    </div>
+  </button>
+  <div class="town-body">
+    <div class="cs"><div class="cs-l"><div class="cs-ico">⚡</div><div><div class="cs-title">Tesla Supercharger — Grand Junction (Mesa Mall)</div><div class="cs-detail">I-70 Exit 26/36 · <strong>Always top off fully here</strong> before the canyon climb to Glenwood Springs · Walkable to food</div></div></div><a class="map-btn" href="https://maps.google.com/?q=Tesla+Supercharger+Mesa+Mall+Grand+Junction+Colorado" target="_blank">📍 Maps</a></div>
+    <div class="cat"><span>🍽️</span> Food</div>
+    <div class="item food"><div class="item-top"><div class="item-name">Spoons Bistro &amp; Bakery</div><span class="badge b-top">🏆 LOCAL FAVORITE</span></div><div class="item-desc">Contemporary American bistro with locally sourced ingredients — Crab Benedict, French dip, Spoonini Panini, and a beautiful outdoor patio. Reviewers describe it as <em>"Michelin class in a quaint homey diner."</em> Proceeds benefit Hope West Hospice. Genuinely exceptional food for a mid-highway stop.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Spoons+Bistro+Bakery+Grand+Junction+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 4.7</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Dream Cafe</div><span class="badge b-std">BRUNCH / LUNCH</span></div><div class="item-desc">Adorable downtown cafe on Main Street — all-day breakfast, Eggs Benedict, Pineapple Upside Down Pancakes, deli sandwiches, Bloody Marys, and mimosas. One of the most popular brunch spots on Colorado's Western Slope.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Dream+Cafe+314+Main+St+Grand+Junction+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.5</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Kannah Creek Brewing Co.</div><span class="badge b-std">BREWPUB LUNCH</span></div><div class="item-desc">Established local brewery using snow-melt water from Kannah Creek — excellent craft beer and all-American pub food with local sourcing. Great burgers and a relaxed atmosphere. Multiple locations, consistently praised service.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Kannah+Creek+Brewing+Grand+Junction+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.5</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Enstrom Candies</div><span class="badge b-std">ROAD SNACK HALL OF FAME</span></div><div class="item-desc">World-renowned almond toffee and house-churned ice cream — <em>"best candy-making in Colorado."</em> Watch production in action, pick up toffee for the rest of the drive. The toffee packs well and is legitimately exceptional. A GJ institution you'd regret skipping.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Enstrom+Candies+Grand+Junction+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 4.8 · World-famous</span></div></div>
+    <div class="cat"><span>🐾</span> Dog Walk</div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Colorado River Riverfront Trail</div><span class="badge b-top">BEST WALK · 2 MI FROM CHARGER</span></div><div class="item-desc">Paved trail through James M. Robb Colorado River State Park — leashed dogs welcome, shade from cottonwood trees, river views, flat easy walking. <em>Dogs can wade in calmer bank areas.</em> About 2 miles from the Mesa Mall Supercharger. Combine with your lunch stop for a perfect 45-min charge break.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Colorado+River+Riverfront+Trail+Grand+Junction" target="_blank">📍 Maps</a></div></div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Lincoln Park Dog Park</div><span class="badge b-std">OFF-LEASH OPTION</span></div><div class="item-desc">Fenced off-leash park inside Lincoln Park — separate sections for large and small dogs, grass, water. If your dog needs a full off-leash sprint rather than a leashed walk, this is the spot. Near downtown, clean and maintained.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Lincoln+Park+Dog+Park+Grand+Junction+Colorado" target="_blank">📍 Maps</a></div></div>
+    <div class="cat"><span>🏨</span> Hotels (alternate overnight if not pushing to Glenwood)</div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">La Quinta Inn &amp; Suites Grand Junction</div><span class="badge b-top">🏆 BEST FOR PETS + CLOSEST TO CHARGER</span></div><div class="item-desc">8.8/10, close to Mesa Mall Supercharger, free breakfast, hot tub, fitness center. La Quinta: <em>no weight limit, no breed restrictions, no pet fee</em>. The most practical pet-friendly hotel in Grand Junction for road-trippers on I-70.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=La+Quinta+Inn+Suites+Grand+Junction+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 8.8/10</span><span class="pet-pill">🐾 No weight limit · No fee</span></div></div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">Hotel Maverick</div><span class="badge b-std">BOUTIQUE</span></div><div class="item-desc">Beautifully designed boutique hotel run by Colorado Mesa University's hospitality program — genuinely excellent restaurant (Devil's Kitchen), upscale feel, great service. More personality than any chain hotel. Dogs welcome.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Hotel+Maverick+Grand+Junction+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 8.7/10</span><span class="pet-pill">🐾 Pet-friendly · confirm fee</span></div></div>
+  </div>
+</div>
+
+<div class="seg"><span class="seg-icon">🚗</span><div class="seg-txt"><strong>Grand Junction → Parachute, CO</strong> &nbsp;|&nbsp; ~50 mi &nbsp;·&nbsp; ~45 min &nbsp;·&nbsp; I-70 E · Colorado River runs alongside the highway · Battlement Mesa visible to the south</div></div>
+
+<!-- ─── PARACHUTE ─── -->
+<div class="town">
+  <button class="town-btn" onclick="tog(this)">
+    <div class="town-head">
+      <div class="town-name">Parachute</div><div class="town-state">CO</div>
+      <div class="ticons"><span class="ti">⚡</span><span class="ti">🍽️</span><span class="ti">🐾</span></div>
+      <span class="chev">▾</span>
+    </div>
+  </button>
+  <div class="town-body">
+    <div class="cs"><div class="cs-l"><div class="cs-ico">⚡</div><div><div class="cs-title">Tesla Supercharger — Parachute, CO</div><div class="cs-detail">28 Cardinal Way · 12 stalls · I-70 exit · 0.7 mi off highway · Allows long-range cars to skip Grand Junction entirely from Green River</div></div></div><a class="map-btn" href="https://maps.google.com/?q=Tesla+Supercharger+28+Cardinal+Way+Parachute+Colorado" target="_blank">📍 Maps</a></div>
+    <div class="cat"><span>🍽️</span> Food — small town, honest options</div>
+    <div class="item food"><div class="item-top"><div class="item-name">Battlement Mesa Grill &amp; Local Spots</div><span class="badge b-top">LOCAL CHARACTER</span></div><div class="item-desc">Parachute is a small oil-country town at the confluence of Parachute Creek and the Colorado River — a handful of local restaurants and diners serve the ranching and energy community. The town has a genuine frontier feel without tourist inflation. Colorado.com calls the food range "a nice variety for a quick pull-off." <em>Ask locals at the gas station next to the Supercharger what's open and good — that intel is always current.</em></div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Parachute+Colorado+restaurants" target="_blank">📍 Maps</a></div></div>
+    <div class="cat"><span>🐾</span> Dog Walk</div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Colorado River Access — Parachute Creek Confluence</div><span class="badge b-top">BEAUTIFUL RIVER WALK</span></div><div class="item-desc">The town sits at the meeting of Parachute Creek and the Colorado River — there are informal river-access points with flat, easy walking along both waterways. Leash required, but the setting is genuinely lovely: big cottonwoods, the sound of the river, and views of the Book Cliffs to the north. <em>Dogs can wade in the river in calmer stretches.</em> A hidden gem of a charge-stop walk.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Parachute+Creek+Colorado+River+confluence+Parachute+CO" target="_blank">📍 Maps</a></div></div>
+  </div>
+</div>
+
+<div class="seg"><span class="seg-icon">🚗</span><div class="seg-txt"><strong>Parachute → Rifle, CO</strong> &nbsp;|&nbsp; ~16 mi &nbsp;·&nbsp; ~15 min &nbsp;·&nbsp; I-70 E · Very short leg — only stop here if you need a quick top-up or food</div></div>
+
+<!-- ─── RIFLE ─── -->
+<div class="town">
+  <button class="town-btn" onclick="tog(this)">
+    <div class="town-head">
+      <div class="town-name">Rifle</div><div class="town-state">CO</div>
+      <div class="ticons"><span class="ti">⚡</span><span class="ti">🍽️</span><span class="ti">🐾</span></div>
+      <span class="chev">▾</span>
+    </div>
+  </button>
+  <div class="town-body">
+    <div class="cs"><div class="cs-l"><div class="cs-ico">⚡</div><div><div class="cs-title">Tesla Supercharger — Rifle, CO (at Sonic)</div><div class="cs-detail">675 Wapiti Ct · I-70 exit · Located at Sonic restaurant · Easy on/off · 25 mi from Glenwood Springs</div></div></div><a class="map-btn" href="https://maps.google.com/?q=Tesla+Supercharger+675+Wapiti+Ct+Rifle+Colorado" target="_blank">📍 Maps</a></div>
+    <div class="cat"><span>🍽️</span> Food</div>
+    <div class="item food"><div class="item-top"><div class="item-name">Talon's Restaurant at Rifle Creek</div><span class="badge b-top">BEST IN RIFLE</span></div><div class="item-desc">Well-reviewed local restaurant in Rifle — solid steaks, fresh salads, and a genuine step up from highway food. Rifle is a small Western Colorado town with more character than it gets credit for. Good lunch stop if you're between Parachute and Glenwood and want a real sit-down meal.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=restaurants+Rifle+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.3</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Sonic Drive-In (at the Supercharger)</div><span class="badge b-std">ZERO EFFORT</span></div><div class="item-desc">The Supercharger is literally at Sonic — cherry limeades, tater tots, and classic drive-in food right where your car is charging. Zero effort, surprisingly enjoyable. If you just need something fast and fun between towns, this works perfectly.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Sonic+Drive-In+Rifle+Colorado" target="_blank">📍 Maps</a></div></div>
+    <div class="cat"><span>🐾</span> Dog Walk</div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Rifle Creek Trail / City Park</div></div><div class="item-desc">Rifle has a pleasant creek-side path through town — leashed dogs welcome. The trail follows Rifle Creek through the small downtown with shade and flat, easy terrain. A quick 15-min loop is easy to fit around a charge stop. Beautiful Colorado creek scenery.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Rifle+Creek+Trail+Rifle+Colorado" target="_blank">📍 Maps</a></div></div>
+  </div>
+</div>
+
+<div class="seg"><span class="seg-icon">🚗</span><div class="seg-txt"><strong>Rifle → Glenwood Springs, CO</strong> &nbsp;|&nbsp; ~26 mi &nbsp;·&nbsp; ~25 min &nbsp;·&nbsp; I-70 E · Glenwood Canyon begins — 12 miles of sheer 1,000-ft walls alongside the Colorado River. One of the most dramatic interstate drives in America.</div></div>
+
+<!-- ─── GLENWOOD SPRINGS ─── -->
+<div class="town">
+  <button class="town-btn" onclick="tog(this)">
+    <div class="town-head">
+      <div class="town-name">Glenwood Springs</div><div class="town-state">CO</div>
+      <div class="ticons"><span class="ti">⚡</span><span class="ti">☕</span><span class="ti">🍽️</span><span class="ti">🏨</span><span class="ti">🐾</span></div>
+      <span class="chev">▾</span>
+    </div>
+  </button>
+  <div class="town-body">
+    <div class="cs"><div class="cs-l"><div class="cs-ico">⚡</div><div><div class="cs-title">Tesla Supercharger — Glenwood Springs</div><div class="cs-detail">125 Wulfsohn Rd · 6 stalls · 24/7 · Courtyard Marriott is directly across the street · Near Glenwood mall with Target and Petco</div></div></div><a class="map-btn" href="https://maps.google.com/?q=Tesla+Supercharger+125+Wulfsohn+Road+Glenwood+Springs+Colorado" target="_blank">📍 Maps</a></div>
+    <div class="cat"><span>☕</span> Coffee</div>
+    <div class="item coffee"><div class="item-top"><div class="item-name">Sweet Coloradough Bakery &amp; Café</div><span class="badge b-top">LOCAL MORNING SPOT</span></div><div class="item-desc">Downtown bakery with fresh-baked goods, excellent coffee, sandwiches, and soups. Beloved by locals as the go-to morning stop. Perfect for grabbing road pastries and a proper latte before the final mountain drive. Walk in directly from Hotel Colorado.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Sweet+Coloradough+Bakery+Cafe+Glenwood+Springs+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 4.8</span></div></div>
+    <div class="item coffee"><div class="item-top"><div class="item-name">Riverblend Coffee House</div><span class="badge b-std">DOG-FRIENDLY PATIO</span></div><div class="item-desc">Riverside coffee house with a dog-friendly patio along the Colorado River. Specifically recommended in Glenwood's official pet-friendly guide for travelers with dogs. A lovely place to sit with your dog and watch the river before hitting I-70.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Riverblend+Coffee+House+Glenwood+Springs+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.5</span></div></div>
+    <div class="cat"><span>🍽️</span> Food</div>
+    <div class="item food"><div class="item-top"><div class="item-name">The Pullman</div><span class="badge b-top">🏆 BEST IN GLENWOOD</span></div><div class="item-desc">Top-rated restaurant in Glenwood Springs — locally sourced ranch beef, sustainable salmon, Rocky Mountain trout, craft cocktails with Colorado spirits. The 14-oz cowboy cut ribeye and lobster ravioli are the standouts. On Restaurant Row, steps from Hotel Colorado.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=The+Pullman+Glenwood+Springs+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 4.7</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Glenwood Canyon Brewpub</div><span class="badge b-std">CANYON VIEWS + CRAFT BEER</span></div><div class="item-desc">Lively local brewpub in a canyon-view setting — excellent craft beer and a solid pub menu. The truffle risotto and house brews are consistently praised. A great casual evening after a long driving day.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Glenwood+Canyon+Brewpub+Glenwood+Springs" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.4</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">19th Street Diner</div><span class="badge b-std">FUNKY 50s CLASSIC</span></div><div class="item-desc">World-famous meatloaf, smoked pulled pork, pot roast, and hearty comfort food in a gloriously eccentric 1950s setting. Funky, fun, and genuinely loved. Perfect if you want something unforgettable and unpretentious.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=19th+Street+Diner+Glenwood+Springs+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.0 · A local legend</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Sundae Artisan Ice Cream</div><span class="badge b-std">🍦 MUST-DO DESSERT</span></div><div class="item-desc">Small-batch artisan ice cream in creative flavors, served in handmade waffle cones. Recognized by Travel + Leisure. Right on Restaurant Row — the natural after-dinner walk. The perfect Colorado treat before crashing.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Sundae+Artisan+Ice+Cream+Glenwood+Springs+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 4.8 · Don't skip this</span></div></div>
+    <div class="cat"><span>🐾</span> Dog Walk — outstanding options</div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Two Rivers Park + Rio Grande Trail</div><span class="badge b-top">BEST DOG WALK ON THE ROUTE</span></div><div class="item-desc">At the confluence of the Colorado and Roaring Fork Rivers — grassy fields, picnic tables, and a <em>fenced off-leash area</em> for dogs under voice control. The adjacent Rio Grande Trail is paved and runs all the way toward Aspen. <em>River bank areas where dogs can wade.</em> Visit Glenwood's pet guide calls this the crown jewel of the city's dog-friendly spots. Plan 30–45 minutes here.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Two+Rivers+Park+Glenwood+Springs+Colorado" target="_blank">📍 Maps</a></div></div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Glenwood Canyon Recreation Path</div><span class="badge b-std">SPECTACULAR PAVED PATH</span></div><div class="item-desc">Paved path through the bottom of Glenwood Canyon alongside the Colorado River — leashed dogs welcome. Views of sheer canyon walls are extraordinary. Several I-70 trailheads (No Name, Grizzly Creek). Do as much or as little as you want. One of the most spectacular easy dog walks in Colorado.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Glenwood+Canyon+Recreation+Path+Colorado" target="_blank">📍 Maps</a></div></div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Glenwood Springs Dog Park</div><span class="badge b-std">FENCED OFF-LEASH</span></div><div class="item-desc">Dedicated fenced off-leash park along the Rio Grande Trail south of Glenwood Springs High School — playground equipment for dogs, fetch and frisbee space. Glenwood's official go-to for off-leash play.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Glenwood+Springs+Dog+Park+Rio+Grande+Trail" target="_blank">📍 Maps</a></div></div>
+    <div class="cat"><span>🏨</span> Hotels</div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">Hotel Colorado</div><span class="badge b-top">🏆 MOST CHARACTER + PET AMENITIES</span></div><div class="item-desc">Historic 1893 landmark on the Colorado River — rated 9.0/10. Provides food and water bowls for pet guests. Beautiful courtyard dining. Steps from Two Rivers Park and Restaurant Row. Teddy Roosevelt once stayed here. The most memorable overnight of the entire route.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Hotel+Colorado+526+Pine+St+Glenwood+Springs" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 9.0/10</span><span class="pet-pill">🐾 Bowls provided</span></div></div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">Courtyard by Marriott Glenwood Springs</div><span class="badge b-std">DIRECTLY ACROSS FROM SUPERCHARGER</span></div><div class="item-desc">The most practical Tesla road-tripper choice — directly across the street from the Supercharger at 125 Wulfsohn Rd. Top off overnight while you sleep. Heated outdoor pool, reliable Marriott quality, easy I-70 departure.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Courtyard+Marriott+Glenwood+Springs+125+Wulfsohn+Road" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 8.5/10</span><span class="pet-pill">🐾 Supercharger across the street</span></div></div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">Hotel Maxwell Anderson</div><span class="badge b-std">BOUTIQUE DESIGN</span></div><div class="item-desc">Stylish boutique hotel with distinctive design, mountain views, and a central downtown location. One of Booking.com's most popular pet-friendly picks in Glenwood. Highly reviewed for service and atmosphere.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Hotel+Maxwell+Anderson+Glenwood+Springs+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 8.9/10</span><span class="pet-pill">🐾 Pet-friendly</span></div></div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">Hampton Inn Glenwood Springs</div><span class="badge b-std">CONSISTENT VALUE</span></div><div class="item-desc">Free hot breakfast, indoor pool, mountain views. Reliable and clean. A comfortable, no-surprises option at a lower price than the boutique hotels. Easy I-70 access for an early departure.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Hampton+Inn+Glenwood+Springs+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 8.4/10</span><span class="pet-pill">🐾 Pet-friendly</span></div></div>
+  </div>
+</div>
+
+<div class="seg"><span class="seg-icon">🚗</span><div class="seg-txt"><strong>Glenwood Springs → Silverthorne, CO</strong> &nbsp;|&nbsp; ~90 mi &nbsp;·&nbsp; ~1.5 hrs &nbsp;·&nbsp; I-70 E · Through Vail and the Continental Divide · Spectacular Rocky Mountain scenery · Eisenhower Tunnel at ~11,013 ft</div></div>
+
+<!-- ─── SILVERTHORNE ─── -->
+<div class="town">
+  <button class="town-btn" onclick="tog(this)">
+    <div class="town-head">
+      <div class="town-name">Silverthorne</div><div class="town-state">CO</div>
+      <div class="ticons"><span class="ti">⚡</span><span class="ti">🍽️</span><span class="ti">🏨</span><span class="ti">🐾</span></div>
+      <span class="chev">▾</span>
+    </div>
+  </button>
+  <div class="town-body">
+    <div class="cs"><div class="cs-l"><div class="cs-ico">⚡</div><div><div class="cs-title">Tesla Supercharger — Silverthorne (Outlets)</div><div class="cs-detail">I-70 Exit 205 · 246-V Rainbow Dr &amp; 101 Ruby Ranch Rd (two locations) · Optional top-up after mountain climbs · 9,000 ft elevation</div></div></div><a class="map-btn" href="https://maps.google.com/?q=Tesla+Supercharger+Outlets+at+Silverthorne+Colorado" target="_blank">📍 Maps</a></div>
+    <div class="cat"><span>🍽️</span> Food</div>
+    <div class="item food"><div class="item-top"><div class="item-name">Arapahoe Cafe &amp; Pub</div><span class="badge b-top">MOUNTAIN TOWN CLASSIC</span></div><div class="item-desc">Longtime Dillon/Silverthorne institution — classic mountain-town fare, excellent burgers, hearty soups, warm pub atmosphere at 9,000 ft. Beloved by ski-season and summer road-trippers alike. Outdoor deck with mountain views when weather permits. A proper reward for crossing the Continental Divide.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Arapahoe+Cafe+Pub+Dillon+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.4</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Pug Ryan's Steakhouse &amp; Brewery</div><span class="badge b-std">BREWERY + STEAK</span></div><div class="item-desc">Local Dillon brewery with excellent food — steaks, burgers, house-brewed Colorado beer. A lively mountain atmosphere steps from the Supercharger at the Outlets. One of the most satisfying meals you'll have at altitude.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Pug+Ryan%27s+Brewery+Dillon+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.3</span></div></div>
+    <div class="cat"><span>🐾</span> Dog Walk — high altitude magic</div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Dillon Reservoir — Blue River Recreation Area</div><span class="badge b-top">MOST SPECTACULAR DOG WALK OF THE TRIP</span></div><div class="item-desc">Leashed dogs welcome along the paved path around Dillon Reservoir — jaw-dropping views of Rocky Mountain peaks reflected in a vast high-alpine lake. This is one of the finest dog walks in Colorado, full stop. Do as little as 20 minutes or walk the full 18-mile loop. The air at 9,000 ft is cool and crisp even in summer. <em>Just 2 minutes from the Supercharger. Don't skip this.</em></div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Dillon+Reservoir+Blue+River+Recreation+Area+Colorado" target="_blank">📍 Maps</a></div></div>
+    <div class="cat"><span>🏨</span> Hotels</div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">La Quinta Inn &amp; Suites Silverthorne</div><span class="badge b-top">BEST FOR PETS</span></div><div class="item-desc">Mountain-view La Quinta — no weight limits, no breed restrictions, no pet fee. Free breakfast, walkable to the Supercharger and Dillon Reservoir trail. Wake up surrounded by the Rockies. The best value pet-friendly hotel in Summit County.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=La+Quinta+Inn+Suites+Silverthorne+Colorado" target="_blank">📍 Maps</a><span class="pet-pill">🐾 No weight limit · No fee</span></div></div>
+    <div class="item hotel"><div class="item-top"><div class="item-name">Hampton Inn &amp; Suites Dillon/Silverthorne</div><span class="badge b-std">MOUNTAIN VIEWS</span></div><div class="item-desc">Well-reviewed Hilton property with mountain views, indoor pool, and free breakfast. Reliable at altitude. Easy I-70 access for the final morning drive into Erie.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Hampton+Inn+Suites+Dillon+Silverthorne+Colorado" target="_blank">📍 Maps</a><span class="pet-pill">🐾 Pet-friendly · confirm fee</span></div></div>
+  </div>
+</div>
+
+<div class="seg"><span class="seg-icon">🚗</span><div class="seg-txt"><strong>Silverthorne → Erie, CO</strong> &nbsp;|&nbsp; ~85 mi &nbsp;·&nbsp; ~1.5 hrs &nbsp;·&nbsp; I-70 E → I-25 N (or scenic US-6 through Clear Creek Canyon) · Drop out of the mountains into the Denver metro, then north to Erie</div></div>
+
+<!-- ─── ERIE ─── -->
+<div class="town">
+  <button class="town-btn" onclick="tog(this)">
+    <div class="town-head">
+      <div class="town-name">Erie &nbsp;·&nbsp; 🏁 Final Destination</div><div class="town-state">CO</div>
+      <div class="ticons"><span class="ti">☕</span><span class="ti">🍽️</span><span class="ti">🐾</span></div>
+      <span class="chev">▾</span>
+    </div>
+  </button>
+  <div class="town-body">
+    <div class="cat"><span>☕</span> Arrival Coffee</div>
+    <div class="item coffee"><div class="item-top"><div class="item-name">Fox Dog Coffee — Erie</div><span class="badge b-top">🏆 ERIE'S #1</span></div><div class="item-desc">Top-rated coffee shop in Erie — <em>"probably the best spot for coffee in Erie."</em> Wonderful staff, great lattes, clean and welcoming. The perfect coffee to mark your arrival after three days on the road.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Fox+Dog+Coffee+Erie+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 4.9</span></div></div>
+    <div class="item coffee"><div class="item-top"><div class="item-name">Boxcar Coffee Roasters — Boulder</div><span class="badge b-std">15 MIN AWAY · NATIONALLY RECOGNIZED</span></div><div class="item-desc">Named one of America's favorite mom-and-pop businesses in 2025 by Entrepreneur Magazine. Specialty roaster with a high-altitude brewing system — genuinely exceptional espresso. 15 minutes from Erie. A worthy arrival detour.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Boxcar+Coffee+Roasters+Boulder+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 4.8</span></div></div>
+    <div class="cat"><span>🍽️</span> Arrival Lunch</div>
+    <div class="item food"><div class="item-top"><div class="item-name">24 Carrot Bistro — Erie</div><span class="badge b-top">🏆 RIGHT IN ERIE</span></div><div class="item-desc">Winner of the Best of Boulder East County dining award — elevated comfort food, solid cocktails, warm community atmosphere. The best sit-down restaurant right in Erie if you want to celebrate arriving without driving to Boulder.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=24+Carrot+Bistro+Erie+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★</span> 4.4</span></div></div>
+    <div class="item food"><div class="item-top"><div class="item-name">Cured — Boulder</div><span class="badge b-std">CELEBRATION LUNCH · 15 MIN</span></div><div class="item-desc">Boulder's beloved artisan food shop and cafe — exceptional sandwiches with house-made charcuterie, local cheeses, and curated provisions. The "reward" stop after three days of driving. Worth the short detour.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Cured+2669+Broadway+Boulder+Colorado" target="_blank">📍 Maps</a><span class="rating"><span class="stars">★★★★★</span> 4.8</span></div></div>
+    <div class="cat"><span>🐾</span> Arrival Dog Walk — you've both earned it</div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Flatirons Vista Open Space — Boulder</div><span class="badge b-top">ICONIC COLORADO WALK</span></div><div class="item-desc">15 minutes from Erie — red dirt path through open meadows with direct views of the iconic Flatiron rock formations. Moderate and beautiful, leashed dogs welcome. <em>The ultimate "we made it to Colorado" celebration walk</em>. Your dog will absolutely lose their mind. One of the finest trail systems in the state.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Flatirons+Vista+Open+Space+Boulder+Colorado" target="_blank">📍 Maps</a></div></div>
+    <div class="item dog"><div class="item-top"><div class="item-name">Erie Community Park + Dog Park</div><span class="badge b-std">RIGHT IN TOWN</span></div><div class="item-desc">Fenced off-leash dog park in Erie — grass, water stations, separate sections for large and small dogs. Your dog has been in the car for three days. Let them zoom. Local and low-key, no detour required.</div><div class="item-meta"><a class="map-btn" href="https://maps.google.com/?q=Erie+Community+Park+Dog+Park+Colorado" target="_blank">📍 Maps</a></div></div>
+  </div>
+</div>
+
+<!-- TIPS -->
+<div class="tips">
+  <div class="tips-title">⚠️ Before You Go</div>
+  <div class="tip"><strong>🐾 Weight limits:</strong> Most hotels cap at 40 lb. La Quinta properties have no weight limit and no pet fee — the best chain for large dogs. Always call ahead to confirm current policy; these change frequently.</div>
+  <div class="tip"><strong>⚡ Trust the nav:</strong> Tesla's in-car routing accounts for real-time battery %, elevation, A/C load, and speed better than any static plan. Use these towns for flexibility — the app will tell you exactly where to stop.</div>
+  <div class="tip"><strong>🏔️ Mountain passes:</strong> I-70 on the final day crosses Vail Pass and Eisenhower Tunnel (~11,013 ft). Check CDOT road conditions at cotrip.org before departing Glenwood Springs, especially in spring or fall.</div>
+  <div class="tip"><strong>🌡️ Desert heat + dogs:</strong> The Barstow–Primm–Vegas–St. George corridor can hit 110°F+ in summer. Never leave the dog in the car (even briefly with the Tesla climate running — battery drain is real). Carry a collapsible water bowl and 2+ gallons of extra water. Do dog walks before 9am or after 5pm.</div>
+  <div class="tip"><strong>⛽ Critical charge:</strong> Always top off fully at Grand Junction Mesa Mall OR Parachute before the canyon climb to Glenwood Springs. Elevation gain plus any A/C or heat load can consume significantly more battery than flat desert driving.</div>
+  <div class="tip"><strong>🗺️ Flexibility is the point:</strong> This itinerary has more towns than you'll need — that's intentional. If you're running ahead of schedule, skip a stop; if behind, overnight somewhere new. Every town has what you need to be comfortable.</div>
+</div>
+
+</div><!-- /wrap -->
+
+<footer>🟢 In progress from Cathedral City · Barstow → Primm → Las Vegas → Mesquite → St. George → Beaver → Richfield → Green River → Grand Junction → Parachute → Rifle → Glenwood Springs → Silverthorne → Erie, CO &nbsp;·&nbsp; Tesla Model Y &nbsp;·&nbsp; Pet Friendly</footer>
+
+<script>
+function tog(btn){
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
+}
+</script>
+</body>
+</html>
